@@ -1,0 +1,47 @@
+# ==============================================================
+# CI PIPELINE — Continuous Integration
+# ==============================================================
+# This pipeline runs automatically every time someone:
+#   - Pushes code to ANY branch
+#   - Opens or updates a Pull Request targeting "main"
+#
+# Its job is to CHECK that the code is working correctly
+# BEFORE it gets merged. This is the "quality gate".
+# ==============================================================
+
+name: CI — Run Tests
+
+# TRIGGER: When does this pipeline run?
+on:
+  push:
+    branches: ["**"]       # Every push to any branch
+  pull_request:
+    branches: ["main"]     # Every PR that targets main
+
+# JOBS: The actual work the pipeline does
+jobs:
+  run-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest   # Use a fresh Linux virtual machine
+
+    steps:
+
+      # STEP 1: Get the code onto the virtual machine
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      # STEP 2: Install Python on the virtual machine
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # STEP 3: Install our project's dependencies (pytest)
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+
+      # STEP 4: Run the tests!
+      # If any test fails, this step fails → the whole pipeline fails
+      # A failed pipeline blocks a Pull Request from being merged.
+      - name: ✅ Run tests with pytest
+        run: pytest tests/ -v

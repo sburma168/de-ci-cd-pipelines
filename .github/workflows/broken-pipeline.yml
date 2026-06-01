@@ -1,0 +1,37 @@
+# ❌ BROKEN: This pipeline is intentionally broken. Can you find and fix the bug?
+#
+# INSTRUCTIONS FOR STUDENTS:
+# 1. Create a branch called "fix-the-pipeline"
+# 2. Push to it — watch this pipeline FAIL in the Actions tab
+# 3. Read the error logs carefully
+# 4. Find the missing step and add it
+# 5. Push again — watch it PASS!
+#
+# HINT: Compare this file carefully with ci.yml...
+
+name: Broken Pipeline (Debug Me!)
+
+on:
+  push:
+    branches: ["fix-the-pipeline"]
+
+jobs:
+  run-tests:
+    name: Run Tests (Broken)
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ❌ BUG IS HERE: Something important is missing between
+      # setting up Python and running the tests...
+
+      - name: Run tests
+        run: pytest tests/ -v

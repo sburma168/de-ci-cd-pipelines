@@ -1,0 +1,60 @@
+# ==============================================================
+# CD PIPELINE — Continuous Delivery
+# ==============================================================
+# This pipeline runs ONLY when code is merged/pushed to "main".
+# It simulates deploying our app to a staging environment.
+#
+# KEY CONCEPT: We run the tests AGAIN here as a safety gate.
+# We only deploy if the tests pass. Never deploy broken code!
+# ==============================================================
+
+name: CD — Deploy to Staging
+
+# TRIGGER: Only run when code lands on the main branch
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    name: Test & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 📦 Install dependencies
+        run: pip install -r requirements.txt
+
+      # GATE: Run tests before deploying.
+      # If tests fail here, the deploy steps below will NOT run.
+      - name: ✅ Run tests (deploy gate)
+        run: pytest tests/ -v
+
+      # DEPLOY: In a real project this would push to a cloud service
+      # (e.g., AWS, Azure, Heroku). Here we simulate it with echo.
+      - name: 📦 Package application
+        run: |
+          echo "📦 Packaging application..."
+          echo "Creating build artifact from latest code on main..."
+          echo "Build artifact created successfully!"
+
+      - name: 🚀 Deploy to Staging
+        run: |
+          echo "🚀 Deploying to staging environment..."
+          echo "Connecting to staging server..."
+          echo "Uploading build artifact..."
+          echo "Restarting application service..."
+          echo "✅ Deployment to STAGING complete!"
+
+      - name: 🔔 Notify team
+        run: |
+          echo "🔔 Sending deployment notification..."
+          echo "✅ Version deployed successfully to staging!"
