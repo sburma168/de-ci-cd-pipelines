@@ -30,18 +30,14 @@ jobs:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
-      # STEP 2: Install Python on the virtual machine
-      - name: 🐍 Set up Python 3.11
-        uses: actions/setup-python@v5
+      # STEP 2: Install Node and run JavaScript tests with Jest
+      - name: 🟩 Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: "3.11"
+          node-version: '18'
 
-      # STEP 3: Install our project's dependencies (pytest)
-      - name: 📦 Install dependencies
-        run: pip install -r requirements.txt
+      - name: 📦 Install npm dependencies
+        run: npm install
 
-      # STEP 4: Run the tests!
-      # If any test fails, this step fails → the whole pipeline fails
-      # A failed pipeline blocks a Pull Request from being merged.
-      - name: ✅ Run tests with pytest
-        run: pytest tests/ -v
+      - name: ✅ Run tests with npm
+        run: npm test --silent

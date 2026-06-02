@@ -1,0 +1,11 @@
+{
+  "name": "de-ci-cd-pipelines",
+  "version": "1.0.0",
+  "description": "Example repo for CI/CD lessons",
+  "scripts": {
+    "test": "jest --colors"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}

@@ -25,13 +25,14 @@ jobs:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python 3.11
-        uses: actions/setup-python@v5
+      - name: 🟩 Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: "3.11"
+          node-version: '18'
 
-      # ❌ BUG IS HERE: Something important is missing between
-      # setting up Python and running the tests...
+      # ❌ BUG IS HERE: Missing `npm install` step — add it to fix the pipeline
+      - name: 📦 Install npm dependencies
+        run: npm install
 
       - name: Run tests
-        run: pytest tests/ -v
+        run: npm test --silent
