@@ -12,10 +12,15 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  if (b === 0) {
+  if (b === 0) {ljk
     throw new Error('Cannot divide by zero!');
   }
   return a / b;
 }
+
+function a
+adasgf
+()
+adsgv
 
 module.exports = { add, subtract, multiply, divide };
