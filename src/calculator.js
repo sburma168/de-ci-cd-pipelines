@@ -18,9 +18,4 @@ function divide(a, b) {
   return a / b;
 }
 
-function a
-adasgf
-()
-adsgv
-
 module.exports = { add, subtract, multiply, divide };
